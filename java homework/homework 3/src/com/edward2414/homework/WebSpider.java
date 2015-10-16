@@ -55,6 +55,16 @@ public class WebSpider {
     		System.out.println(ss);
     	}
     	*/
-    	System.out.println(s);
+    	String ss = new String("");
+    	int index0 = 0;
+    	while((index0 = s.indexOf("<li><a href")) != -1)
+    	{
+    		ss = s.substring(index0);
+    		ss = ss.substring(ss.indexOf("\"") + 1);
+    		//s = ss.substring(ss.indexOf("\"") + 1);
+    		s = ss;
+    		ss = ss.substring(0, ss.indexOf("\""));
+    		System.out.println(StartUrl + ss);
+    	}
     }
 }
