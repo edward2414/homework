@@ -42,29 +42,31 @@ public class WebSpider {
     	String StartUrl = "http://www.ybdu.com/xiaoshuo/2/2442/";
     	WebSpider mWebSpider = new WebSpider(StartUrl);
     	String s = new String(mWebSpider.getHtml());
-    	/*
     	String ss = new String("");
     	int index0 = 0;
-    	while((index0 = s.indexOf("href=\"")) != -1)
-    	{
-    		ss = s.substring(index0);
-    		ss = ss.substring(ss.indexOf("\"") + 1);
-    		s = ss.substring(ss.indexOf("\"") + 1);
-    		ss = ss.substring(0, ss.indexOf("\""));
-    		if(ss.indexOf("/") == -1) continue;
-    		System.out.println(ss);
+    	GetContent mGetContent;
+    	try{
+    		File file = new File("诛仙.txt");
+    		if(!file.exists()) 
+    		{
+    			file.createNewFile();
+    		}
+    		FileWriter fw = new FileWriter(file.getAbsoluteFile());
+    		BufferedWriter bw = new BufferedWriter(fw);
+    		while((index0 = s.indexOf("<li><a href")) != -1)
+    		{
+    			ss = s.substring(index0);
+    			ss = ss.substring(ss.indexOf("\"") + 1);
+    			s = ss;
+    			ss = ss.substring(0, ss.indexOf("\""));
+    			mGetContent = new GetContent(StartUrl + ss);
+    			bw.write(mGetContent.getTitle() + "\n" + mGetContent.getContent() + "\n");
+    		}
+    		bw.close();
     	}
-    	*/
-    	String ss = new String("");
-    	int index0 = 0;
-    	while((index0 = s.indexOf("<li><a href")) != -1)
+    	catch(IOException e)
     	{
-    		ss = s.substring(index0);
-    		ss = ss.substring(ss.indexOf("\"") + 1);
-    		//s = ss.substring(ss.indexOf("\"") + 1);
-    		s = ss;
-    		ss = ss.substring(0, ss.indexOf("\""));
-    		System.out.println(StartUrl + ss);
+    		e.printStackTrace();
     	}
     }
 }
