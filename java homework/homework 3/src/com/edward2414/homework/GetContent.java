@@ -21,6 +21,7 @@ public class GetContent {
 		s = s.trim();
 		s = s.replaceAll("\\?", " ");
 		s = s.replaceAll("&nbsp;", " ");
+		s = s.replaceAll("&quot;", "\"");
 		return s;
 	}
 	
@@ -34,6 +35,7 @@ public class GetContent {
 		s = s.replaceAll("<br />", "");
 		s = s.replaceAll(" ", "");
 		s = s.replaceAll("&nbsp;", " ");
+		s = s.replaceAll("&quot;", "\"");
 		return s;
 	}
 	
