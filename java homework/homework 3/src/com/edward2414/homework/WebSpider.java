@@ -67,7 +67,7 @@ public class WebSpider {
     			s = ss;
     			ss = ss.substring(0, ss.indexOf("\""));
     			mGetContent = new GetContent(url + ss);
-    			bw.write(mGetContent.getTitle() + "\r\n" + mGetContent.getContent() + "\r\n");
+    			bw.write(mGetContent.getTitle() + "\r\n\r\n" + mGetContent.getContent() + "\r\n\r\n\r\n");
     		}
     		bw.close();
     	}
