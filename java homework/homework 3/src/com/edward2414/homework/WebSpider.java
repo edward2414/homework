@@ -1,46 +1,53 @@
 package com.edward2414.homework;
-import java.util.*;
-import java.lang.*;
-import java.awt.*;
-import java.net.*;
+
 import java.io.*;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.*;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.*;
+import org.apache.http.util.EntityUtils;
 
 public class WebSpider {
-	String StartUrl;
+	
+	String StartUrl = "";
+	
 	WebSpider(String s)
 	{
 		StartUrl = s;
 	}
-	@SuppressWarnings("deprecation")
-	public String getHtml()
-	{
-		String mString = "", buf;
-		try{
-			URL mUrl = new URL(StartUrl);
-			DataInputStream in =
-					new DataInputStream(
-					new BufferedInputStream(
-					mUrl.openStream()));
-			String ms0="<!--HTMLBUILERPART0-->";
-			String ms1="<!--/HTMLBUILERPART0-->";
-			boolean flag = false;
-			int i, j, k;
-			while((buf = in.readLine()) != null){
-				buf = (new String(buf.getBytes("ISO-8859-1"),"GBK"));
-				if((i = buf.indexOf(ms0)) >= 0) flag = true;
-				if((i = buf.indexOf(ms1)) >= 0) flag = false;
-				if(true) mString += buf + '\n';
-			}
-			in.close();
-		}catch(Exception e){
-			
-		}
-		return mString;
-	}
-    public static void main(String[] args)
+	
+	public String getHtml() throws IOException{
+		String ret = "";
+	    CloseableHttpClient httpclient = HttpClients.createDefault();
+	    HttpGet httpget = new HttpGet(StartUrl);
+	    try{
+		    CloseableHttpResponse response = httpclient.execute(httpget);
+		    HttpEntity entity = response.getEntity();
+		    if(entity != null)
+		    {
+			    ret =  EntityUtils.toString(entity, "GBK");
+		    }
+	    }
+	    catch(ClientProtocolException e)
+	    {
+		    e.printStackTrace();
+	    }
+	    catch(IOException e)
+	    {
+		    e.printStackTrace();
+	    }
+	    finally
+	    {
+	        httpclient.close();
+	    }
+	    return ret;
+    }
+
+    public static void main(String[] args) throws IOException
     {
-    	String StartUrl = "http://www.ybdu.com/xiaoshuo/2/2442/";
-    	WebSpider mWebSpider = new WebSpider(StartUrl);
+    	String url = "http://www.ybdu.com/xiaoshuo/2/2442/";
+    	WebSpider mWebSpider = new WebSpider(url);
     	String s = new String(mWebSpider.getHtml());
     	String ss = new String("");
     	int index0 = 0;
@@ -59,7 +66,7 @@ public class WebSpider {
     			ss = ss.substring(ss.indexOf("\"") + 1);
     			s = ss;
     			ss = ss.substring(0, ss.indexOf("\""));
-    			mGetContent = new GetContent(StartUrl + ss);
+    			mGetContent = new GetContent(url + ss);
     			bw.write(mGetContent.getTitle() + "\n" + mGetContent.getContent() + "\n");
     		}
     		bw.close();

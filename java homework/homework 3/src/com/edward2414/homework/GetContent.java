@@ -1,5 +1,5 @@
 package com.edward2414.homework;
-import java.net.*;
+import java.io.IOException;
 
 public class GetContent {
 	
@@ -10,7 +10,7 @@ public class GetContent {
 		url = s;
 	}
 	
-	public String getTitle()
+	public String getTitle() throws IOException
 	{
 		WebSpider mWebSpider = new WebSpider(this.url);
 		String s = new String(mWebSpider.getHtml());
@@ -24,7 +24,7 @@ public class GetContent {
 		return s;
 	}
 	
-	public String getContent()
+	public String getContent() throws IOException
 	{
 		WebSpider mWebSpider = new WebSpider(this.url);
 		String s = new String(mWebSpider.getHtml());
